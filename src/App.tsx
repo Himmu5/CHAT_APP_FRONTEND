@@ -1,15 +1,14 @@
 import { FC } from "react";
 import LogInAndRegister from "./Component/Register/LogInAndRegister";
 import UserProvider from "./Component/Providers/UserProvider";
-// import axios from "axios";
+import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 import Chat from "./Component/pages/Chat";
 
-type P = {};
+type P = object
 
 const App: FC<P> = () => {
-  // axios.defaults.baseURL = `http://localhost:1000`;
-  // axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = `https://himmu-chat-backend.onrender.com/`;
 
   return (
     <div>
