@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { withUser } from "../hoc/withUser";
 import { user } from "../models/user";
@@ -40,7 +41,7 @@ const Chat: FC<P> = ({ user }) => {
   }, []);
 
   function connect() {
-    const ws = new WebSocket("ws://localhost:1000");
+    const ws = new WebSocket("ws://himmu-chat-backend.onrender.com");
     setWS(ws);
 
     ws.addEventListener("message", handleMessage);
