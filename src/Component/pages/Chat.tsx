@@ -128,7 +128,7 @@ const Chat: FC<P> = ({ user }) => {
           <Logo />
 
           {onlineUsers.map((person, id) => {
-            return (
+            return person?.username && (
               <OnlinePerson
                 key={id}
                 selectUserId={selectUserId!}
