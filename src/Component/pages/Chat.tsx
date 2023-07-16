@@ -41,7 +41,7 @@ const Chat: FC<P> = ({ user }) => {
   }, []);
 
   function connect() {
-    const ws = new WebSocket("ws://himmu-chat-backend.onrender.com");
+    const ws = new WebSocket("https://himmu-chat-backend.onrender.com/");
     setWS(ws);
 
     ws.addEventListener("message", handleMessage);
