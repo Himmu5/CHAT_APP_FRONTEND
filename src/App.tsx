@@ -9,6 +9,7 @@ type P = object
 
 const App: FC<P> = () => {
   axios.defaults.baseURL = `https://himmu-chat-backend.onrender.com/`;
+  axios.defaults.withCredentials = true;
 
   return (
     <div>
