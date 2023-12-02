@@ -9,18 +9,22 @@ type P = {
 
 const UserProvider: FC<P> = ({ children }) => {
 
-  
+
   const [user, setUser] = useState<user>();
 
-  useEffect(()=>{
-    axios.get('/profile').then((res)=>{
-        setUser(res.data);
-    })
-  },[])
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      axios.get('/profile' , { headers : { Authorization : token } }).then((res) => {
+        setUser(res.data.user);
+      })
+    }
+  }, [])
 
 
   function removeUser() {
     setUser(undefined);
+    localStorage.removeItem('token');
   }
 
   return (

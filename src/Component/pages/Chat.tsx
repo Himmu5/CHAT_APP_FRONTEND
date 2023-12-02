@@ -19,7 +19,7 @@ type P = {
 };
 
 const Chat: FC<P> = ({ user }) => {
-  console.log("Users : " , user);
+  
   const [ws, setWS] = useState<WebSocket>();
   const [message, setMessage] = useState("");
   const lastdivRef = useRef(null);
@@ -27,8 +27,7 @@ const Chat: FC<P> = ({ user }) => {
   const [onlineUsers, setOnlineUsers] = useState<
     { userId: string; username: string }[]
   >([]);
-
-  console.log("onlineUsers ", onlineUsers);
+  
   const [selectUserId, setSelectUserId] = useState<string>();
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -40,8 +39,8 @@ const Chat: FC<P> = ({ user }) => {
     connect();
   }, []);
 
-  function connect() {
-    const ws = new WebSocket("wss://himmu-chat-backend.onrender.com/");
+  function connect() { 
+    const ws = new WebSocket("ws://localhost:1000/");
     setWS(ws);
 
     ws.addEventListener("message", handleMessage);
@@ -75,18 +74,20 @@ const Chat: FC<P> = ({ user }) => {
       return { ...prev, [current.userId]: current };
     }, {});
 
-    console.log(onlinePeopleObj, "onlinePeople");
     let onlinePeople = Object.keys(onlinePeopleObj).map(
       (key: string) => onlinePeopleObj[key]
     );
-
+    
     onlinePeople = onlinePeople.filter((per) => per.username !== user.username);
     setOnlineUsers(onlinePeople);
   }
 
   function handleMessage(e: MessageEvent<any>) {
+    
     const data = JSON.parse(e.data);
+    
     if ("online" in data) {
+
       seeOnlinePeople(data);
     } else if ("text" in data) {
       setMessages((prev) => [...prev, { ...data }]);
@@ -111,7 +112,7 @@ const Chat: FC<P> = ({ user }) => {
         ...prev,
         {
           text: message,
-          sender: user.userId,
+          sender: user._id,
           recipient: selectUserId!,
           _id: Date.now(),
         },
@@ -120,7 +121,7 @@ const Chat: FC<P> = ({ user }) => {
   }
 
   const uniqueMessages = lodash.uniqBy(messages, "_id");
-
+  
   return (
     <>
       <div className="flex h-screen">
@@ -152,7 +153,7 @@ const Chat: FC<P> = ({ user }) => {
                       key={m._id}
                       className={
                         " m-2 my-3  " +
-                        (user.userId === m.sender
+                        (user._id === m.sender
                           ? " text-right "
                           : " text-left ")
                       }
@@ -161,7 +162,7 @@ const Chat: FC<P> = ({ user }) => {
                         <div
                           className={
                             " p-2 inline-block rounded-xl shadow-2xl  " +
-                            (m.sender === user.userId
+                            (m.sender === user._id
                               ? " bg-blue-500 text-white "
                               : "  bg-gray-700  text-white ")
                           }

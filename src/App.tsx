@@ -4,11 +4,13 @@ import UserProvider from "./Component/Providers/UserProvider";
 import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 import Chat from "./Component/pages/Chat";
+import AuthRoute from "./Component/Routes/AuthRoute";
+import UserRoute from "./Component/Routes/UserRoute";
 
 type P = object
 
 const App: FC<P> = () => {
-  axios.defaults.baseURL = `https://himmu-chat-backend.onrender.com/`;
+  axios.defaults.baseURL = `http://localhost:1000/`;
   axios.defaults.withCredentials = true;
 
   return (
@@ -17,15 +19,15 @@ const App: FC<P> = () => {
         <Routes>
           <Route
             path="/"
-            element={<LogInAndRegister formType={"Register Now"} />}
+            element={<AuthRoute><LogInAndRegister formType={"Register Now"} /></AuthRoute>}
           />
           <Route
             path="/LogIn"
-            element={<LogInAndRegister formType={"Log In"} />}
+            element={<AuthRoute><LogInAndRegister formType={"Log In"} /></AuthRoute>}
           />
            <Route
             path="/Chat"
-            element={<Chat/>}
+            element={<UserRoute><Chat/></UserRoute>}
           />
         </Routes>
       </UserProvider>

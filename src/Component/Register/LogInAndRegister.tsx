@@ -66,14 +66,14 @@ type S = typeof initialState;
 const submit = (values: S, bag: FormikBag<P, S>) => {
   if (bag.props.formType == "Register Now") {
     createUser(values).then((res) => {
-      bag.props.setUser(res);
+      localStorage.setItem("token", res.token);
+      bag.props.setUser(res.user);
     });
   }
   if (bag.props.formType == "Log In") {
     logInUser(values).then((res) => {
-      console.log( "User created" , res);
-      const temp = { ...res , userId : res._id}
-      bag.props.setUser(temp);
+      localStorage.setItem("token", res.token);
+      bag.props.setUser(res.user);
     });
 
   }

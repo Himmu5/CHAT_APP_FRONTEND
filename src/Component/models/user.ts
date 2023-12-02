@@ -1,5 +1,6 @@
 export type user = {
     username:string;
     password:string,
-    userId:string
+    userId:string;
+    _id : string
 }
