@@ -16,8 +16,8 @@ const OnlinePerson: FC<P> = ({ selectUserId, person, selectUser }) => {
   return (
     <div
       className={
-        " flex w-full text-white  text-xl  rounded-xl py-2 " +
-        (selectUserId == person.userId ? " bg-indigo-700  " : "hover:bg-gray-500")
+        " flex w-full text-white  text-xl  rounded-xl py-2 mx-2 " +
+        (selectUserId == person.userId ? selectUserId === "GPT" ? "bg-gray-400  " : " bg-indigo-700  " : "hover:bg-gray-500")
       }
     >
       

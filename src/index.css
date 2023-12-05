@@ -1,7 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+body , div {
+  scrollbar-width: none; /* Firefox */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -19,7 +19,7 @@ const UserProvider: FC<P> = ({ children }) => {
         setUser(res.data.user);
       })
     }
-  }, [])
+}, [])
 
 
   function removeUser() {

@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Chat from "./Component/pages/Chat";
 import AuthRoute from "./Component/Routes/AuthRoute";
 import UserRoute from "./Component/Routes/UserRoute";
+import ChatProvider from "./Component/Providers/ChatProvider";
 
 type P = object
 
@@ -16,20 +17,22 @@ const App: FC<P> = () => {
   return (
     <div>
       <UserProvider>
-        <Routes>
-          <Route
-            path="/"
-            element={<AuthRoute><LogInAndRegister formType={"Register Now"} /></AuthRoute>}
-          />
-          <Route
-            path="/LogIn"
-            element={<AuthRoute><LogInAndRegister formType={"Log In"} /></AuthRoute>}
-          />
-           <Route
-            path="/Chat"
-            element={<UserRoute><Chat/></UserRoute>}
-          />
-        </Routes>
+        <ChatProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={<AuthRoute><LogInAndRegister formType={"Register Now"} /></AuthRoute>}
+            />
+            <Route
+              path="/LogIn"
+              element={<AuthRoute><LogInAndRegister formType={"Log In"} /></AuthRoute>}
+            />
+            <Route
+              path="/Chat"
+              element={<UserRoute><Chat /></UserRoute>}
+            />
+          </Routes>
+        </ChatProvider>
       </UserProvider>
     </div>
   );

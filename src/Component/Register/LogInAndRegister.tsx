@@ -20,38 +20,44 @@ const LogInAndRegister: FC<P> = ({
   handleChange,
   handleSubmit,
 }) => {
-  
+
   if (user) {
-    return  <Navigate to={"/Chat"} />
+    return <Navigate to={"/Chat"} />
   }
 
   return (
     <div className="h-screen flex justify-center items-center bg-blue-50 mb-10">
-      <form className=" space-y-2  w-64 flex flex-col " onSubmit={handleSubmit}>
-        <Input
-          name="username"
-          placeholder="Enter the email"
-          value={values.username}
-          onChange={handleChange}
-        />
-        <Input
-          placeholder="Password"
-          type="password"
-          name="password"
-          value={values.password}
-          onChange={handleChange}
-        />
-        <Button type="submit">{formType}</Button>
-        {formType == "Log In" ? (
-          <Link to="/" className="text-center text-sm underline">
-            Create a Account
-          </Link>
-        ) : (
-          <Link to={"/LogIn"} className="text-center text-sm underline">
-            Already have an account?
-          </Link>
-        )}
-      </form>
+      <div>
+        <div className=" mb-10 justify-center flex items-center gap-2">
+          <img className="h-10 w-10" src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="logo" />
+          <p className="text-sm sm:text-lg md:text-xl">Chat AI</p>
+        </div>
+        <form className=" space-y-2  w-64 flex flex-col " onSubmit={handleSubmit}>
+          <Input
+            name="username"
+            placeholder="Enter the email"
+            value={values.username}
+            onChange={handleChange}
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            name="password"
+            value={values.password}
+            onChange={handleChange}
+          />
+          <Button type="submit">{formType}</Button>
+          {formType == "Log In" ? (
+            <Link to="/" className="text-center text-sm underline">
+              Create a Account
+            </Link>
+          ) : (
+            <Link to={"/LogIn"} className="text-center text-sm underline">
+              Already have an account?
+            </Link>
+          )}
+        </form>
+      </div>
     </div>
   );
 };
