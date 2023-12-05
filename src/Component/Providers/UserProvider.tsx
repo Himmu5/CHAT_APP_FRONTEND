@@ -11,15 +11,22 @@ const UserProvider: FC<P> = ({ children }) => {
 
 
   const [user, setUser] = useState<user>();
+  console.log("user : ", user);
+
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      axios.get('/profile' , { headers : { Authorization : token } }).then((res) => {
+      axios.get('/profile', { headers: { Authorization: token } }).then((res) => {
+
         setUser(res.data.user);
       })
     }
   }, [])
+
+  if (!user) {
+    return <div>Loading...</div>
+  }
 
 
   function removeUser() {

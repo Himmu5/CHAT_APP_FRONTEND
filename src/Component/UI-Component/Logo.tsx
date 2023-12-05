@@ -18,13 +18,13 @@ const Logo: FC<P> = ({ removeUser }) => {
     <div className="flex p-2 text-white py-4 gap-1 items-center justify-between text-lg border-b-2 border-black">
       <div className="flex items-center gap-1">
         <HiOutlineChatBubbleLeftRight size={25} />
-        <div className="font-bold">Telegram clone</div>
+        <div className="font-bold">Chat AI</div>
       </div>
       <Popover>
         <PopoverTrigger asChild className="cursor-pointer">
           <Button variant={"outline"} className=""  ><SlOptionsVertical size={20} /></Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full cursor-pointer" onClick={removeUser}>
+        <PopoverContent className="w-full cursor-pointer " onClick={removeUser}>
           Log Out
         </PopoverContent>
       </Popover>
