@@ -24,9 +24,9 @@ const UserProvider: FC<P> = ({ children }) => {
     }
   }, [])
 
-  if (!user) {
-    return <div>Loading...</div>
-  }
+  // if (!user) {
+  //   return <div>Loading...</div>
+  // }
 
 
   function removeUser() {

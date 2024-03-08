@@ -11,7 +11,7 @@ import ChatProvider from "./Component/Providers/ChatProvider";
 type P = object
 
 const App: FC<P> = () => {
-  axios.defaults.baseURL = `http://localhost:1000/`;
+  axios.defaults.baseURL = `http://localhost:3000/`;
   axios.defaults.withCredentials = true;
 
   return (
