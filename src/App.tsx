@@ -11,7 +11,7 @@ import ChatProvider from "./Component/Providers/ChatProvider";
 type P = object
 
 const App: FC<P> = () => {
-  axios.defaults.baseURL = `http://localhost:3000/`;
+  axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
   axios.defaults.withCredentials = true;
 
   return (
@@ -20,11 +20,11 @@ const App: FC<P> = () => {
         <ChatProvider>
           <Routes>
             <Route
-              path="/"
+              path="/register"
               element={<AuthRoute><LogInAndRegister formType={"Register Now"} /></AuthRoute>}
             />
             <Route
-              path="/LogIn"
+              path="/"
               element={<AuthRoute><LogInAndRegister formType={"Log In"} /></AuthRoute>}
             />
             <Route

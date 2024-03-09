@@ -32,7 +32,6 @@ const Chat: FC<P> = ({ user, selectUser, selectUserId , onlineUsers ,uniqueMessa
         <div className="w-1/4 bg-gray-800 shadow-xl  flex flex-col justify-between">
           <div>
             <Logo />
-
             <OnlineMapper selectUser={selectUser} selectUserId={selectUserId!} onlineUsers={onlineUsers} />
           </div>
           <div className="my-2 text-sm">

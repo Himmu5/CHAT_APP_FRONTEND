@@ -3,7 +3,6 @@ import { FC, FormEvent, ReactNode, useEffect, useRef, useState } from 'react'
 import { ChatContext } from '../Context/ChatContext';
 import axios from 'axios';
 import { Message } from '../models/message';
-import { Navigate } from 'react-router-dom';
 import { withUser } from '../hoc/withUser';
 import { user } from '../models/user';
 import lodash from 'lodash';
@@ -16,13 +15,16 @@ const ChatProvider: FC<P> = ({ children, user }) => {
     const [message, setMessage] = useState("");
     const lastdivRef = useRef(null);
 
+    
+    console.log("user: ",user)
+    // console.log("data: ",data);
     const [onlineUsers, setOnlineUsers] = useState<
         { userId: string; username: string }[]
     >([]);
 
     const [selectUserId, setSelectUserId] = useState<string>();
     const [messages, setMessages] = useState<Message[]>([]);
-    const [gptMessages, setGptMessages] = useState<Message[]>([]);
+    // const [gptMessages, setGptMessages] = useState<Message[]>([]);
 
 
     useEffect(() => {
@@ -49,9 +51,8 @@ const ChatProvider: FC<P> = ({ children, user }) => {
 
 
     function connect() {
-        const ws = new WebSocket("ws://localhost:1000/");
+        const ws = new WebSocket(import.meta.env.VITE_SOCKET_URL);
         setWS(ws);
-
         ws.addEventListener("message", handleMessage);
         ws.addEventListener("close", () => {
             connect();
@@ -68,11 +69,11 @@ const ChatProvider: FC<P> = ({ children, user }) => {
         } = people["online"].reduce((prev, current) => {
             return { ...prev, [current.userId]: current };
         }, {});
-
         let onlinePeople = Object.keys(onlinePeopleObj).map(
             (key: string) => onlinePeopleObj[key]
         );
-        onlinePeople = onlinePeople.filter((per) => per.username !== user?.username);
+        console.log("user: ",user)
+        onlinePeople = onlinePeople.filter((per) => per.userId !== user?._id);
         setOnlineUsers(onlinePeople);
     }
 
