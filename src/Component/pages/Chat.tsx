@@ -18,13 +18,24 @@ type P = {
   selectUserId: string;
   onlineUsers: user[]
   uniqueMessages: Message[];
-  lastdivRef : React.MutableRefObject<any>;
-  sendMessage : (e : any)=>void;
-  message : string;
-  setMessage : (a:string)=>void;
+  lastdivRef: React.MutableRefObject<any>;
+  sendMessage: (e: any) => void;
+  message: string;
+  setMessage: (a: string) => void;
+  gptMessages: Message[];
 };
 
-const Chat: FC<P> = ({ user, selectUser, selectUserId , onlineUsers ,uniqueMessages , lastdivRef , sendMessage , message , setMessage}) => {
+const Chat: FC<P> = ({
+  gptMessages,
+  user,
+  selectUser,
+  selectUserId,
+  onlineUsers,
+  uniqueMessages,
+  lastdivRef,
+  sendMessage,
+  message,
+  setMessage }) => {
 
   return (
     <>
@@ -49,7 +60,7 @@ const Chat: FC<P> = ({ user, selectUser, selectUserId , onlineUsers ,uniqueMessa
               <AiOutlineArrowLeft /> <p>Selected Person's Chat</p>
             </div>
           ) : (
-            <MessagesMapper user={user} uniqueMessages={uniqueMessages} lastdivRef={lastdivRef} />
+            <MessagesMapper user={user} uniqueMessages={selectUserId !== "GPT" ? uniqueMessages : gptMessages} lastdivRef={lastdivRef} />
           )}
 
           <MessageInputForm sendMessage={sendMessage} message={message} setMessage={setMessage} selectUserId={selectUserId} />

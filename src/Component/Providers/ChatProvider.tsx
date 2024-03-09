@@ -15,16 +15,13 @@ const ChatProvider: FC<P> = ({ children, user }) => {
     const [message, setMessage] = useState("");
     const lastdivRef = useRef(null);
 
-    
-    console.log("user: ",user)
-    // console.log("data: ",data);
     const [onlineUsers, setOnlineUsers] = useState<
         { userId: string; username: string }[]
     >([]);
 
     const [selectUserId, setSelectUserId] = useState<string>();
     const [messages, setMessages] = useState<Message[]>([]);
-    // const [gptMessages, setGptMessages] = useState<Message[]>([]);
+    const [gptMessages, setGptMessages] = useState<Message[]>([]);
 
 
     useEffect(() => {
@@ -72,7 +69,7 @@ const ChatProvider: FC<P> = ({ children, user }) => {
         let onlinePeople = Object.keys(onlinePeopleObj).map(
             (key: string) => onlinePeopleObj[key]
         );
-        console.log("user: ",user)
+        console.log("user: ", user)
         onlinePeople = onlinePeople.filter((per) => per.userId !== user?._id);
         setOnlineUsers(onlinePeople);
     }
@@ -96,13 +93,20 @@ const ChatProvider: FC<P> = ({ children, user }) => {
     }
 
     function sendMessage(e: FormEvent<HTMLFormElement>) {
-        setMessages((prev) => [...prev, { text: message, _id: Math.random(), recipient: Math.random().toString(), sender: user._id }]);
         e.preventDefault();
         if (selectUserId === "GPT") {
+            const oldData = [...gptMessages]
+            oldData.push({
+                text: message,
+                sender: user._id,
+                recipient: selectUserId!,
+                _id: Date.now(),
+            });
+            setGptMessages(oldData)
             axios.post("/chat", { query: message }).then((res) => {
                 const { data } = res;
                 const newData = { text: data.response.content as string, _id: Math.random(), recipient: Math.random().toString(), sender: Math.random().toString() }
-                setMessages((prev) => [...prev, newData]);
+                setGptMessages((prev) => [...prev, newData]);
                 setMessage("");
             });
         } else {
@@ -129,7 +133,19 @@ const ChatProvider: FC<P> = ({ children, user }) => {
 
     const uniqueMessages = lodash.uniqBy(messages, "_id");
 
-    return <ChatContext.Provider value={{ message, user, onlineUsers, setMessage, lastdivRef, selectUser, setSelectUserId, sendMessage, uniqueMessages, selectUserId,  }} >
+    return <ChatContext.Provider value={{
+        gptMessages,
+        message,
+        user,
+        onlineUsers,
+        setMessage,
+        lastdivRef,
+        selectUser,
+        setSelectUserId,
+        sendMessage,
+        uniqueMessages,
+        selectUserId
+    }} >
         {children}
     </ChatContext.Provider>
 }
